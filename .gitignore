@@ -18,5 +18,6 @@ api_services/app/environment-dev.ini
 celery_worker/app/logs
 celery_worker/app/storages
 celery_worker/app/environment-dev.ini
+celery_worker/app/worker/ml/models_weights/face_recognition
 
 # 3. service flower
