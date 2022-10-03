@@ -2,5 +2,21 @@
 system_storages/ml-storages/face-rec
 
 # Logs file
-system_logs/api-services-logs/*
-system_logs/celery_logs/*
+system_logs/api-services-logs/*.log
+system_logs/celery_logs/workers.log
+
+# env file
+.env-dev
+
+# 1. service web-api
+api_services/app/logs
+api_services/app/storages
+api_services/app/redis_storages
+api_services/app/environment-dev.ini
+
+# 2. service celery-worker
+celery_worker/app/logs
+celery_worker/app/storages
+celery_worker/app/environment-dev.ini
+
+# 3. service flower
