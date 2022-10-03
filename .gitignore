@@ -1,0 +1,6 @@
+# Storages
+system_storages/ml-storages/face-rec
+
+# Logs file
+system_logs/api-services-logs/*
+system_logs/celery_logs/*
