@@ -1,0 +1,9 @@
+fastapi
+celery
+configparser
+uvicorn[standard]
+gunicorn
+datetime
+redis
+python-multipart
+
