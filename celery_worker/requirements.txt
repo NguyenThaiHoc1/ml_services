@@ -1,0 +1,10 @@
+# worker
+celery
+flower
+redis
+
+# Tensorflow
+tensorflow-cpu
+pillow
+opencv-python
+matplotlib
