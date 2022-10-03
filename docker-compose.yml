@@ -1,0 +1,76 @@
+version: "3.4"
+
+services:
+  worker:
+    build:
+      context: ./celery_worker
+      dockerfile: Dockerfile
+    container_name: celery-worker
+    restart: unless-stopped
+    command: sh -c "celery -A tasks worker -P solo -c 4 --loglevel=info --logfile=/app/logs/workers.log"
+    volumes:
+      - ./celery_worker/app:/app/
+      - ./system_storages/ml-storages:/app/storages/
+      - ./system_logs/celery_logs:/app/logs/
+    depends_on:
+      - redis
+    networks:
+      - mlnet
+
+  redis:
+    container_name: redis
+    image: redis:6-alpine
+    restart: unless-stopped
+    command: redis-server --requirepass password
+    volumes:
+      - redis-data:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - mlnet
+
+  web_api:
+    container_name: ml-api
+    build:
+      context: ./api_services
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    env_file:
+      - .env
+    command: uvicorn main:app --host ${WEB_API_HOST} --port ${WEB_API_PORT} --reload
+    volumes:
+      - ./api_services/app:/app/
+      - ./system_storages/ml-storages:/app/storages/
+      - ./system_logs/api-services-logs:/app/logs/
+    ports:
+      - "8081:8081"
+    depends_on:
+      - redis
+    networks:
+      - mlnet
+
+  dashboard:
+    container_name: flower-dashboard
+    build:
+      context: ./flower
+      dockerfile: Dockerfile
+    command: celery --broker=redis://:${REDIS_PASS}@${REDIS_HOST}:${REDIS_PORT}/${REDIS_BROKER_NAME} flower --loglevel=info
+    ports:
+      - "5555:5555"
+    env_file:
+      - .env
+    environment:
+      - CELERY_BROKER_URL=redis://:${REDIS_PASS}@${REDIS_HOST}:${REDIS_PORT}/${REDIS_BROKER_NAME}
+      - CELERY_RESULT_BACKEND=redis://:${REDIS_PASS}@${REDIS_HOST}:${REDIS_PORT}/${REDIS_BACKEND_NAME}
+    depends_on:
+      - web_api
+      - worker
+      - redis
+    networks:
+      - mlnet
+
+networks:
+  mlnet:
+
+volumes:
+  redis-data:
