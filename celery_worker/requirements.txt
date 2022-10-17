@@ -3,8 +3,9 @@ celery
 flower
 redis
 
-# Tensorflow
-tensorflow-cpu
+# Tensorflow tensorflow-cpu
+tensorflow-cpu==2.10.0
+tensorflow-serving-api==2.10.0
 pillow
 opencv-python
 matplotlib
