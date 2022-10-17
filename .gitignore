@@ -22,3 +22,11 @@ celery_worker/app/worker/ml/models_weights/face_recognition/*
 !celery_worker/app/worker/ml/models_weights/face_recognition/.gitkeep
 
 # 3. service flower
+
+
+# 4. nginx
+nginx/logs/*
+!nginx/logs/.gitkeep
+
+# tensorflow serving
+serving_models/face_recognition/*
