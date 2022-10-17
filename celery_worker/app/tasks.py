@@ -17,10 +17,10 @@ from redis_main import redis
 from celery.signals import after_setup_logger
 
 # import helpers
-from worker.ml.helpers import facerec_utilis as face_helpers
+from helpers.ml import facerec_utilis as face_helpers
 
 # import Task Model
-from worker.ml.models_class.face_recognition.celery_face_task import FacePredictTask
+from tasks_model.task_FaceRec import FacePredictTask
 
 # check connect redis
 if not init_redis.is_backend_running(): exit()
@@ -61,11 +61,11 @@ def face_recognition_task(self, task_id: str, data: bytes):
         path_image = data["upload_result"]["path"]
         image = face_helpers.read_image_from_path_to_numpy(path=path_image)
         image = face_helpers.preprocess_image(np_array=image)
-        embeddings = self.model.predict(image)
+        embeddings = self.model.http_send_request(image)
         data["time"]["end_face_rec"] = str(time_helpers.now_utc())
         data["status"]["face_rec_status"] = "SUCCESS"
         data["status"]["general_status"] = "SUCCESS"
-        data["face_rec_result"] = embeddings.numpy().tolist()
+        data["face_rec_result"] = embeddings
         data_dump = json.dumps(data)
         redis.set(task_id, data_dump)
         logging.info(f"== API_TASK: {task_id} DONE...")
