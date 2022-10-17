@@ -1,13 +1,13 @@
 version: "3.4"
 
 services:
+
   worker:
     build:
       context: ./celery_worker
       dockerfile: Dockerfile
-    container_name: celery-worker
     restart: unless-stopped
-    command: sh -c "celery -A tasks worker -P solo -c 4 --loglevel=info --logfile=/app/logs/workers.log"
+    command: sh -c "celery -A tasks worker -P solo -c 4 --loglevel=info"
     volumes:
       - ./celery_worker/app:/app/
       - ./system_storages/ml-storages:/app/storages/
@@ -66,6 +66,32 @@ services:
       - web_api
       - worker
       - redis
+    networks:
+      - mlnet
+
+  tf_serving:
+    image: tensorflow/serving:nightly
+    restart: always
+    environment:
+      - TF_CPP_MIN_VLOG_LEVEL=4
+    volumes:
+      - ./serving_models:/models
+    command: --model_config_file=/models/models.config --model_config_file_poll_wait_seconds=200
+    deploy:
+      mode: replicated
+      replicas: 2
+    networks:
+      - mlnet
+
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/logs:/var/log/nginx
+    depends_on:
+      - tf_serving
+    ports:
+      - "4000:4000"
     networks:
       - mlnet
 
