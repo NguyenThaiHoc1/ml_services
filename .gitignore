@@ -4,6 +4,7 @@ system_storages/ml-storages/face-rec
 # Logs file
 system_logs/api-services-logs/*.log
 system_logs/celery_logs/workers.log
+!system_storages/ml-storages/.gitkeep
 
 # env file
 .env-dev
