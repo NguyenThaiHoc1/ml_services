@@ -31,10 +31,3 @@ REDIS_backend = "redis://:{password}@{hostname}:{port}/{db_name}".format(
     port=REDIS["port"],
     db_name=REDIS["backend_db_name"]
 )
-
-
-# =========================================================================
-#                          ML - FACE RECOGNITION MODEL PATH
-# =========================================================================
-FACE_REC_cfg = cfg["ml-model_face_recognition"]
-FACE_REC_model_path = PATH_PROJECT / FACE_REC_cfg["model_path"]
