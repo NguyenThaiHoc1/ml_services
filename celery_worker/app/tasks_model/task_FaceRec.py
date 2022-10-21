@@ -21,22 +21,22 @@ class FacePredictTask(Task):
 
             proto_http = {
                 'url_main': "http://{domain}:{port}/v1/models/{model_name}:predict".format(
-                    domain=service_config.HTTP_DOMAIN,
-                    port=service_config.HTTP_PORT,
-                    model_name=service_config.HTTP_MODEL_NAME
+                    domain=service_config.HTTP_DOMAIN_face_rec,
+                    port=service_config.HTTP_PORT_face_rec,
+                    model_name=service_config.HTTP_MODEL_NAME_face_rec
                 )
             }
 
             proto_grpc = {
                 'url_main': "{domain}:{port}".format(
-                    domain=service_config.GRPC_DOMAIN,
-                    port=service_config.GRPC_PORT
+                    domain=service_config.GRPC_DOMAIN_face_rec,
+                    port=service_config.GRPC_PORT_face_rec
                 ),
-                'signature_name': service_config.GRPC_SIGNATURE_NAME,
-                'model_name': service_config.GRPC_MODEL_NAME,
+                'signature_name': service_config.GRPC_SIGNATURE_NAME_face_rec,
+                'model_name': service_config.GRPC_MODEL_NAME_face_rec,
                 'grpc_config_options': [
-                    ('grpc.max_send_message_length', service_config.GRPC_MAX_MESSAGE_LENGTH),
-                    ('grpc.max_receive_message_length', service_config.GRPC_MAX_MESSAGE_LENGTH)
+                    ('grpc.max_send_message_length', service_config.GRPC_MAX_MESSAGE_LENGTH_face_rec),
+                    ('grpc.max_receive_message_length', service_config.GRPC_MAX_MESSAGE_LENGTH_face_rec)
                 ]
             }
 
