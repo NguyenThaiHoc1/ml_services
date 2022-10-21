@@ -31,3 +31,4 @@ REDIS_backend = "redis://:{password}@{hostname}:{port}/{db_name}".format(
     port=REDIS["port"],
     db_name=REDIS["backend_db_name"]
 )
+

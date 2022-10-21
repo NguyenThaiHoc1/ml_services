@@ -2,6 +2,7 @@
 celery
 flower
 redis
+pydantic
 
 # Tensorflow tensorflow-cpu
 tensorflow-cpu==2.10.0
