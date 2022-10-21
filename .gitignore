@@ -34,3 +34,4 @@ nginx/logs/*
 
 # tensorflow serving
 serving_models/face_recognition/*
+serving_models/face_detection/*
