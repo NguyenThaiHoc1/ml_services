@@ -43,6 +43,16 @@ ML_FACE_RECOGNITION_storage_path = PATH_PROJECT / ML_FACE_RECOGNITION_cfg["stora
 ML_FACE_RECOGNITION_storage_path.mkdir(parents=True, exist_ok=True)  # hay
 
 # =========================================================================
+#                          FACE DETECTION INFORMATION
+# =========================================================================
+ML_FACE_DETECTION_cfg = cfg["ml-model_face_detection"]
+ML_FACE_DETECTION_image_type = ML_FACE_DETECTION_cfg["image_type"]
+ML_FACE_DETECTION_task = ML_FACE_DETECTION_cfg["name_task"]
+ML_FACE_DETECTION_query_name = ML_FACE_DETECTION_cfg["query_name"]
+ML_FACE_DETECTION_storage_path = PATH_PROJECT / ML_FACE_DETECTION_cfg["storage_upload_path"]
+ML_FACE_DETECTION_storage_path.mkdir(parents=True, exist_ok=True)
+
+# =========================================================================
 #                          REDIS CONFIG
 # =========================================================================
 REDIS = cfg["redis"]
