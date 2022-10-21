@@ -7,7 +7,7 @@ services:
       context: ./celery_worker
       dockerfile: Dockerfile
     restart: unless-stopped
-    command: sh -c "celery -A tasks worker -P solo -c 4 --loglevel=info"
+    command: sh -c "celery -A tasks worker -P solo -c 2 --loglevel=info"
     volumes:
       - ./celery_worker/app:/app/
       - ./system_storages/ml-storages:/app/storages/

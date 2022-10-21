@@ -1,3 +1,6 @@
+
+*.zip
+
 # Storages
 system_storages/ml-storages/face-rec
 
